@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "Tutorial: Create beautiful hillshade maps from digital elevation models with GDAL and Mapnik"
+title:  "Tutorial part 1: Create beautiful hillshade maps from digital elevation models with GDAL and Mapnik"
 date:   2011-02-05 17:15:11 +0000
 categories: tutorials
 ---
@@ -59,17 +59,23 @@ Download and upzip the shapefile and the .dem folder. Then open a terminal windo
 
 Then, in the terminal:
 
-<code>$ cd raw-ca-dems</code>
+{% highlight bash %}
+$ cd raw-ca-dems
+{% endhighlight %}
 
 First we'll merge the digital elevation model tiles into a single .dem file using <strong>gdal_merge</strong>. We need to specify that we want any areas without data to be white by specifying <strong>-init "255"</strong>. Then we specify our desired output filename with <strong>-o (filename)</strong> and then list the files we want to merge together. Like so:
 
-<code>$ gdal_merge.py -init "255" -o ca-dem-combined.dem alturas-e.dem alturas-w.dem bakersfield-e.dem bakersfield-w.dem chico-e.dem chico-w.dem crescent_city-e.dem death_valley-e.dem death_valley-w.dem el_centro-e.dem el_centro-w.dem eureka-e.dem fresno-e.dem fresno-w.dem goldfield-w.dem kingman-e.dem kingman-w.dem klamath_falls-w.dem las_vegas-w.dem long_beach-e.dem long_beach-w.dem los_angeles-e.dem los_angeles-w.dem lovelock-w.dem mariposa-e.dem mariposa-w.dem medford-e.dem medford-w.dem monterey-e.dem monterey-w.dem needles-e.dem needles-w.dem noyo_canyon-e.dem redding-e.dem redding-w.dem reno-e.dem reno-w.dem sacramento-e.dem sacramento-w.dem salton_sea-e.dem salton_sea-w.dem san_bernardino-e.dem san_bernardino-w.dem san_clemente_island-e.dem san_diego-e.dem san_diego-w.dem san_francisco-e.dem san_francisco-w.dem san_jose-e.dem san_jose-w.dem san_luis_obispo-e.dem san_luis_obispo-w.dem santa_ana-e.dem santa_ana-w.dem santa_cruz-e.dem santa_maria-e.dem santa_rosa_island-e.dem santa_rosa-e.dem santa_rosa-w.dem susanville-e.dem susanville-w.dem trona-e.dem trona-w.dem ukiah-e.dem ukiah-w.dem vya-w.dem walker_lake-e.dem walker_lake-w.dem weed-e.dem weed-w.dem</code>
+{% highlight bash %}
+$ gdal_merge.py -init "255" -o ca-dem-combined.dem alturas-e.dem alturas-w.dem bakersfield-e.dem bakersfield-w.dem chico-e.dem chico-w.dem crescent_city-e.dem death_valley-e.dem death_valley-w.dem el_centro-e.dem el_centro-w.dem eureka-e.dem fresno-e.dem fresno-w.dem goldfield-w.dem kingman-e.dem kingman-w.dem klamath_falls-w.dem las_vegas-w.dem long_beach-e.dem long_beach-w.dem los_angeles-e.dem los_angeles-w.dem lovelock-w.dem mariposa-e.dem mariposa-w.dem medford-e.dem medford-w.dem monterey-e.dem monterey-w.dem needles-e.dem needles-w.dem noyo_canyon-e.dem redding-e.dem redding-w.dem reno-e.dem reno-w.dem sacramento-e.dem sacramento-w.dem salton_sea-e.dem salton_sea-w.dem san_bernardino-e.dem san_bernardino-w.dem san_clemente_island-e.dem san_diego-e.dem san_diego-w.dem san_francisco-e.dem san_francisco-w.dem san_jose-e.dem san_jose-w.dem san_luis_obispo-e.dem san_luis_obispo-w.dem santa_ana-e.dem santa_ana-w.dem santa_cruz-e.dem santa_maria-e.dem santa_rosa_island-e.dem santa_rosa-e.dem santa_rosa-w.dem susanville-e.dem susanville-w.dem trona-e.dem trona-w.dem ukiah-e.dem ukiah-w.dem vya-w.dem walker_lake-e.dem walker_lake-w.dem weed-e.dem weed-w.dem
+{% endhighlight %}
 
 As long as you don't get any errors, you should now have a new file in your folder called ca-dem-combined.dem. If you have GIS software like Quantum GIS you should be able to add this as a raster layer. If you do open it up, you shouldn't see any seams between the former tiles -- that's what we want for a good-looking Mapnik layer.
 
 But for this to work in Mapnik, we need a GeoTIFF. To convert the merged .dem to a GeoTIFF, we'll use <a href="http://www.gdal.org/gdaldem.html"><strong>gdaldem</strong></a>. The gdaldem command has several modes; we'll use hillshade to create a shaded relief map, the most common way to visualize texture. We also need to specify the ratio of vertical units to horizontal. Since right now the .dem is in WGS84 projection (standard latitude/longitude), we'll use degrees, so <strong>-s 111120</strong>. Then we specify the input file and the output file. Here's the full command:
 
-<code>$ gdaldem hillshade -s 111120 ca-dem-combined.dem ca-dem-combined.tif</code>
+{% highlight bash %}
+$ gdaldem hillshade -s 111120 ca-dem-combined.dem ca-dem-combined.tif
+{% endhighlight %}
 
 Even if you don't have a GIS viewer, you should be able to open the .tif file in any image browser like Preview or Photoshop. (Be careful you don't resave the file, though -- most image editors will remove necessary geometric data from the file if you re-save it.) You'll see a few thin black lines around the outside edge of the old tile data, but don't worry -- we'll cut this out later.
 
@@ -77,7 +83,9 @@ Even if you don't have a GIS viewer, you should be able to open the .tif file in
 
 So now we have a combined .tif, but most of the time we want to display our finished project in Mercator projection -- most non-GIS types will think non-Mercator maps look a bit strange. We need to reproject our .tif to Mercator with <a href="http://www.gdal.org/gdalwarp.html"><strong>gdalwarp</strong></a>. We'll use the <strong>-t_srs</strong> option to set the target projection, and use the projection specification for the version of Mercator that's also used by Google Maps and OpenLayers.
 
-<code>$ gdalwarp -t_srs '+proj=merc +lon_0=0 +k=1 +x_0=0 +y_0=0 +ellps=WGS84 +datum=WGS84 +units=m +no_defs' ca-dem-combined.tif ca-dem-combined-merc.tif</code>
+{% highlight bash %}
+$ gdalwarp -t_srs '+proj=merc +lon_0=0 +k=1 +x_0=0 +y_0=0 +ellps=WGS84 +datum=WGS84 +units=m +no_defs' ca-dem-combined.tif ca-dem-combined-merc.tif
+{% endhighlight %}
 
 If you open up the resulting file, you should see that the projection has changed.
 
@@ -87,23 +95,31 @@ Now we have our final hillshade data, but we want to only show California -- not
 
 First, we determine the bounding box, or extent, of our clipping mask -- the California border shapefile in this case. We use <strong>ogrinfo</strong> for this, which comes along with GDAL Complete.
 
-<code>$ ogrinfo -al ../ca-mercator/ca-mercator.shp</code>
+{% highlight bash %}
+$ ogrinfo -al ../ca-mercator/ca-mercator.shp
+{% endhighlight %}
 
 This will return a lot of details about the shapefile. But if you scroll back to the top of the output you'll see:
 
-<code>Extent: (-13849389.898804, 3810165.061203) - (-12704836.275367, 5133847.169980)</code>
+{% highlight bash %}
+Extent: (-13849389.898804, 3810165.061203) - (-12704836.275367, 5133847.169980)
+{% endhighlight %}
 
 These represent the longitude and latitude points (in Mercator projection) of the southwest and northeast corners of our shapefile data.
 
 Next, we trim our merged Mercator .tif to those exact boundaries with <a href="http://www.gdal.org/gdal_translate.html"><strong>gdal_translate</strong></a>.
 
-<code>$ gdal_translate -projwin -13849389.898804 5133847.169980 -12704836.275367 3810165.061203 ca-dem-combined-merc.tif ca-dem-combined-merc-box.tif</code>
+{% highlight bash %}
+$ gdal_translate -projwin -13849389.898804 5133847.169980 -12704836.275367 3810165.061203 ca-dem-combined-merc.tif ca-dem-combined-merc-box.tif
+{% endhighlight %}
 
 <strong>Warning:</strong> Notice that in the above command we reversed the order of the two y-axis values (5133847.169980 and 3810165.061203) from how they appeared in our ogrinfo query. This is because gdal_translate's <strong>-projwin</strong> option is looking for the upper left and lower right coordinates -- exactly the opposite of the extent we got from ogrinfo. Annoying, but that's just the way it is.
 
 Finally, we'll use the shapefile's polygon boundaries as a clipping mask on the merged, projected and trimmed .tif, which is now trimmed to show the same area as the shapefile. We'll use <a><strong>gdalwarp</strong></a> for this, using some different options than before. The <strong>-co COMPRESS=DEFLATE</strong> option is a generic "creation option" that can have many values. We specify <strong>-dstalpha</strong> to create a "nodata" band in our resulting .tif, so we are left with a transparent background. And finally we use <strong>-cutline</strong> to specify a file to use as the clipping mask. As before we then specify our input file and desired output filename.
 
-<code>$ gdalwarp -co COMPRESS=DEFLATE -dstalpha -cutline ../ca-mercator/ca-mercator.shp ca-dem-combined-merc-box.tif ca-dem-combined-merc-cutout.tif</code>
+{% highlight bash %}
+$ gdalwarp -co COMPRESS=DEFLATE -dstalpha -cutline ../ca-mercator/ca-mercator.shp ca-dem-combined-merc-box.tif ca-dem-combined-merc-cutout.tif
+{% endhighlight %}
 
 And there's our textured California border. If you open <strong>ca-dem-combined-merc-cutout.tif</strong> in an image viewer, you should see a beautifully clipped grayscale image.
 
