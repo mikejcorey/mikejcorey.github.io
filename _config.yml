@@ -9,13 +9,13 @@ url: http://localhost:4000
 disqus_shortname: stratajekylldemo
 facebook_username:
 twitter_username: "mikejcorey"
-linkedin_username: "#"
+linkedin_username:
 instagram_username:
 pinterest_username:
 flickr_username:
 github_username:  "mikejcorey"
 feed_icon: rss
-email: "#"
+email: "mikejcorey@gmail.com"
 gems: [jekyll-paginate]
 paginate_path: "/page/:num/"
 paginate: 5
