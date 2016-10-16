@@ -1,20 +1,19 @@
-title: Strata by HTML5 UP
+title: Michael Corey, data journalist
 description: >
-  **I am Strata**, a super simple
-  responsive site template freebie
-  crafted by [HTML5 UP](http://html5up.net).
-copyright: Untitled
+  **Michael Corey**, is a data journalist
+  who likes maps, science and history.
+copyright: 2016 Michael Corey
 sass:
   sass_dir: assets/sass
 url: http://localhost:4000
 disqus_shortname: stratajekylldemo
 facebook_username:
-twitter_username: "#"
+twitter_username: "mikejcorey"
 linkedin_username: "#"
 instagram_username:
 pinterest_username:
 flickr_username:
-github_username:  "#"
+github_username:  "mikejcorey"
 feed_icon: rss
 email: "#"
 gems: [jekyll-paginate]
