@@ -5,7 +5,7 @@ description: >
 copyright: 2016 Michael Corey
 sass:
   sass_dir: assets/sass
-url: http://localhost:4000
+url: http://www.mikejcorey.com
 disqus_shortname: stratajekylldemo
 facebook_username:
 twitter_username: "mikejcorey"
