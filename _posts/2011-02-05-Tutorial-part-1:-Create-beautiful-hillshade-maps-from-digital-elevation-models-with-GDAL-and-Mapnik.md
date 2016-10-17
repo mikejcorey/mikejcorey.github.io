@@ -3,6 +3,7 @@ layout: post
 title:  "Tutorial part 1: Create beautiful hillshade maps from digital elevation models with GDAL and Mapnik"
 date:   2011-02-05 17:15:11 +0000
 categories: tutorials
+redirect_from: "/wordpress/2011/02/05/tutorial-create-beautiful-hillshade-maps-from-digital-elevation-models-with-gdal-and-mapnik/"
 ---
 
 

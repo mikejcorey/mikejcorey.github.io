@@ -3,6 +3,7 @@ layout: post
 title:  "Tutorial part 2: Create beautiful hillshade maps from digital elevation models with GDAL and Mapnik"
 date:   2011-02-25 17:15:11 +0000
 categories: tutorials
+redirect_from: "/wordpress/2011/02/25/tutorial-part-2-create-beautiful-hillshade-maps-from-digital-elevation-models-with-gdal-and-mapnik/"
 ---
 
 <a href="/tutorials/2011/02/05/Tutorial-part-1-Create-beautiful-hillshade-maps-from-digital-elevation-models-with-GDAL-and-Mapnik.html">In part 1 of our GDAL and Mapnik hillshade map tutorial</a>, we used GDAL to convert tiled USGS digital elevation models to a merged GeoTIFF. When also reprojected the map to Mercator and used a California border shapefile to cut out just the state of California.
