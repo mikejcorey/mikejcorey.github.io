@@ -5,7 +5,7 @@ date:   2011-02-25 17:15:11 +0000
 categories: tutorials
 ---
 
-<a href="http://www.mikejcorey.com/wordpress/2011/02/05/tutorial-create-beautiful-hillshade-maps-from-digital-elevation-models-with-gdal-and-mapnik/">In part 1 of our GDAL and Mapnik hillshade map tutorial</a>, we used GDAL to convert tiled USGS digital elevation models to a merged GeoTIFF. When also reprojected the map to Mercator and used a California border shapefile to cut out just the state of California.
+<a href="/tutorials/2011/02/05/Tutorial-part-1-Create-beautiful-hillshade-maps-from-digital-elevation-models-with-GDAL-and-Mapnik.html">In part 1 of our GDAL and Mapnik hillshade map tutorial</a>, we used GDAL to convert tiled USGS digital elevation models to a merged GeoTIFF. When also reprojected the map to Mercator and used a California border shapefile to cut out just the state of California.
 
 In this installment, we'll use the result as a Mapnik layer, and check out some different options for using raster data in your Mapnik maps.
 
@@ -20,10 +20,10 @@ If you're not running version 2, a lot of this will still work, though you might
 Here's the data we'll use for this part of the tutorial:
 
 <ul>
-	<li><a href="http://www.mikejcorey.com/download/ca-mercator.tar.gz">A California border shapefile in Mercator projection (SRID 3395)</a></li>
-	<li><a href="http://www.mikejcorey.com/download/california_county_shortline.tar.gz">A California county/shorelines shapefile (SRID 4326)</a></li>
-	<li><a href="http://www.mikejcorey.com/download/california_water.tar.gz">A California water shapefile (SRID 4269)</a></li>
-	<li><a href="http://www.mikejcorey.com/download/ca-dem-combined-merc-cutout.tif.gz">The final GeoTIFF cutout from part 1</a> (This is an 88 MB file, so don't download if you don't have to!)</li>
+	<li><a href="media.mikejcorey.com/download/ca-mercator.tar.gz">A California border shapefile in Mercator projection (SRID 3395)</a></li>
+	<li><a href="media.mikejcorey.com/download/california_county_shortline.tar.gz">A California county/shorelines shapefile (SRID 4326)</a></li>
+	<li><a href="media.mikejcorey.com/download/california_water.tar.gz">A California water shapefile (SRID 4269)</a></li>
+	<li><a href="media.mikejcorey.com/download/ca-dem-combined-merc-cutout.tif.gz">The final GeoTIFF cutout from part 1</a> (This is an 88 MB file, so don't download if you don't have to!)</li>
 </ul>
 
 
@@ -156,7 +156,7 @@ $ python ca-stuff-compile.py
 
 If you don't get any error messages, check your directory. You should see a new file called ca-map.png, and hopefully your hillshade map is in the middle.
 
-<img src="http://www.mikejcorey.com/wordpress/wp-content/uploads/2011/02/ca-mapnik-1.jpg" alt="" title="ca-mapnik-1" width="610" height="406" class="aligncenter size-full wp-image-400" />
+<img src="http://media.mikejcorey.com/blog/2011/02/ca-mapnik-1.jpg" alt="" title="ca-mapnik-1" width="610" height="406" class="aligncenter size-full wp-image-400" />
 
 Neato! Well, sort of - it's pretty boring, right? Not much different from our original GeoTIFF. Let's change that now by adding more styles and more map layers to our XML. We'll add a lot at once here, but not so much conceptually:
 
@@ -299,7 +299,7 @@ $ python ca-stuff-compile.py
 
 If you did everything right, you should have a simple but pretty nice multi-layer Mapnik map.
 
-<a href="http://www.mikejcorey.com/wordpress/wp-content/uploads/2011/02/ca-mapnik-2.jpg"><img src="http://www.mikejcorey.com/wordpress/wp-content/uploads/2011/02/ca-mapnik-2.jpg" alt="" title="ca-mapnik-2" width="610" height="407" class="aligncenter size-full wp-image-402" /></a>
+<a href="http://media.mikejcorey.com/blog/2011/02/ca-mapnik-2.jpg"><img src="http://media.mikejcorey.com/blog/2011/02/ca-mapnik-2.jpg" alt="" title="ca-mapnik-2" width="610" height="407" class="aligncenter size-full wp-image-402" /></a>
 
 Since we used a fairly high-resolution GeoTIFF, you should be able to change the image dimensions in ca-stuff-compile.py to make the image quite large for print, HD video, or a poster for your bedroom. But even I don't do that with my maps!
 

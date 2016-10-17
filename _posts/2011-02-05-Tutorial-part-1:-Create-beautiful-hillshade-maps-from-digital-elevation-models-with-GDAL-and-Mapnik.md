@@ -8,7 +8,7 @@ categories: tutorials
 
 Mapnik is your best friend if you want to create map tiles for a slippy map or just want an open-source way to output high-quality printed maps for a wide variety of uses.
 
-Though for your first project I might recommend a somewhat lower-priority project, <a href="http://www.mikejcorey.com/wordpress/wp-content/uploads/2011/02/SaveTheDate3-5x5.jpg">I like to think I'm the only person to ever use Mapnik to make wedding invitations</a>.
+Though for your first project I might recommend a somewhat lower-priority project, <a href="http://media.mikejcorey.com/blog/2011/02/SaveTheDate3-5x5.jpg">I like to think I'm the only person to ever use Mapnik to make wedding invitations</a>.
 
 (If I'm wrong, I'd love to see more examples!)
 
@@ -24,7 +24,7 @@ Less luckily, the digital elevation models are sliced up into small pieces. This
 
 A statewide elevation model of California, for example, requires <a href="http://www.brenorbrophy.com/California-DEM.htm">merging 70 .dem files at the 2 arc-second resolution</a>.
 
-<a href="http://www.brenorbrophy.com/California-DEM.htm"><img class="aligncenter size-full wp-image-374" title="ca-components" src="http://www.mikejcorey.com/wordpress/wp-content/uploads/2011/02/ca-components.jpg" alt="" width="610" height="610" /></a>
+<a href="http://www.brenorbrophy.com/California-DEM.htm"><img class="aligncenter size-full wp-image-374" title="ca-components" src="http://media.mikejcorey.com/blog/2011/02/ca-components.jpg" alt="" width="610" height="610" /></a>
 
 However, never fear! GDAL is here to help.
 
@@ -49,10 +49,10 @@ The Mapnik website has detailed <a href="http://trac.mapnik.org/wiki/MacInstalla
 
 The tutorial is divided into two parts. Part 1, this post, will focus on merging, converting, projecting and clipping the digital elevation models so they can be used with Mapnik. We'll handle the Mapnik process in part 2.
 <h2>Data mis en place</h2>
-Here's the data we'll use for this tutorial:<a href="http://www.mikejcorey.com/download/ca-mercator.tar.gz"></a>
+Here's the data we'll use for this tutorial:<a href="http://media.mikejcorey.com/download/ca-mercator.tar.gz"></a>
 <ul>
-	<li><a href="http://www.mikejcorey.com/download/ca-mercator.tar.gz">A California border shapefile in Mercator projection (SRID 3395)</a></li>
-	<li> <a href="http://www.mikejcorey.com/download/raw-ca-dems.tar.gz">A g-zipped archive of all the digital elevation models you'll need for California</a></li>
+	<li><a href="http://media.mikejcorey.com/download/ca-mercator.tar.gz">A California border shapefile in Mercator projection (SRID 3395)</a></li>
+	<li> <a href="http://media.mikejcorey.com/download/raw-ca-dems.tar.gz">A g-zipped archive of all the digital elevation models you'll need for California</a></li>
 </ul>
 <h2>Fun with GDAL</h2>
 Download and upzip the shapefile and the .dem folder. Then open a terminal window and navigate to wherever you downloaded the shapefile and dem folders.
@@ -79,7 +79,7 @@ $ gdaldem hillshade -s 111120 ca-dem-combined.dem ca-dem-combined.tif
 
 Even if you don't have a GIS viewer, you should be able to open the .tif file in any image browser like Preview or Photoshop. (Be careful you don't resave the file, though -- most image editors will remove necessary geometric data from the file if you re-save it.) You'll see a few thin black lines around the outside edge of the old tile data, but don't worry -- we'll cut this out later.
 
-<img class="aligncenter size-full wp-image-378" title="ca-combined" src="http://www.mikejcorey.com/wordpress/wp-content/uploads/2011/02/ca-combined.jpg" alt="" width="620" height="620" />
+<img class="aligncenter size-full wp-image-378" title="ca-combined" src="http://media.mikejcorey.com/blog/2011/02/ca-combined.jpg" alt="" width="620" height="620" />
 
 So now we have a combined .tif, but most of the time we want to display our finished project in Mercator projection -- most non-GIS types will think non-Mercator maps look a bit strange. We need to reproject our .tif to Mercator with <a href="http://www.gdal.org/gdalwarp.html"><strong>gdalwarp</strong></a>. We'll use the <strong>-t_srs</strong> option to set the target projection, and use the projection specification for the version of Mercator that's also used by Google Maps and OpenLayers.
 
@@ -89,7 +89,7 @@ $ gdalwarp -t_srs '+proj=merc +lon_0=0 +k=1 +x_0=0 +y_0=0 +ellps=WGS84 +datum=WG
 
 If you open up the resulting file, you should see that the projection has changed.
 
-<img class="aligncenter size-full wp-image-379" title="ca-merc" src="http://www.mikejcorey.com/wordpress/wp-content/uploads/2011/02/ca-merc.jpg" alt="" width="620" height="781" />
+<img class="aligncenter size-full wp-image-379" title="ca-merc" src="http://media.mikejcorey.com/blog/2011/02/ca-merc.jpg" alt="" width="620" height="781" />
 
 Now we have our final hillshade data, but we want to only show California -- not all the extra stuff outside the border. We'll use our California border shapefile as a mask to cut out just the hillshade data inside the boundary. This is a three-step process.
 
@@ -123,6 +123,6 @@ $ gdalwarp -co COMPRESS=DEFLATE -dstalpha -cutline ../ca-mercator/ca-mercator.sh
 
 And there's our textured California border. If you open <strong>ca-dem-combined-merc-cutout.tif</strong> in an image viewer, you should see a beautifully clipped grayscale image.
 
-<img class="aligncenter size-full wp-image-380" title="ca-cutout" src="http://www.mikejcorey.com/wordpress/wp-content/uploads/2011/02/ca-cutout.jpg" alt="" width="620" height="717" />
+<img class="aligncenter size-full wp-image-380" title="ca-cutout" src="http://media.mikejcorey.com/blog/2011/02/ca-cutout.jpg" alt="" width="620" height="717" />
 
-<a href="http://www.mikejcorey.com/wordpress/2011/02/25/tutorial-part-2-create-beautiful-hillshade-maps-from-digital-elevation-models-with-gdal-and-mapnik/">In the second half of our tutorial, we'll use this cutout .tif as a layer in Mapnik</a>. We're more than halfway there!
+<a href="/tutorials/2011/02/25/Tutorial-part-2-Create-beautiful-hillshade-maps-from-digital-elevation-models-with-GDAL-and-Mapnik.html">In the second half of our tutorial, we'll use this cutout .tif as a layer in Mapnik</a>. We're more than halfway there!
